@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <Controls/>
-      <GameBoard name="Welcome to TicTacToe AKA zero Kataa" ></GameBoard>  {/* style={iqra} */}
+      <GameBoard name="Welcome to TicTacToe" ></GameBoard>  {/* style={iqra} */}
     </div>
   );
 }

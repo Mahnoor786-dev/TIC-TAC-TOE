@@ -4,37 +4,65 @@ import './/GameBoard.css'
 function GameBoard() {
 
     const [symbol, setSymbol] = useState('X');
-    const [board, setBoard] = useState(Array(9).fill(null));
+    const [board, setBoard] = useState(Array(9).fill(''));
+    const [result, setResult] = useState('');
+
+    function checkWinner() {
+        //Check vertical win
+        for (let i = 0; i < 3; i++) {
+            if (board[i] === board[i + 3] === board[i + 6] === 'X') {
+                setResult('X');
+            }
+            else if (board[i] === board[i + 3] === board[i + 6] === 'O') {
+                setResult('O');
+            }
+        }
+
+        //Check diagnol win
+        if ((board[0] === board[4] === board[8] === 'X') || (board[2] === board[4] === board[6] === 'X')) {
+            setResult('X');
+        }
+        else if ((board[0] === board[4] === board[8] === 'O') || (board[2] === board[4] === board[6] === 'O')) {
+            setResult('O');
+        }
+
+        //Check horizontal win
+        for (let i = 0; i < 7; i += 6) {
+            if (board[i] === board[i + 1] === board[i + 2] === 'X') {
+                setResult('X');
+            }
+            else if (board[i] === board[i + 1] === board[i + 2] === 'O') {
+                setResult('O');
+            }
+        }
+    }
 
     function handleClick(boardCell) {
+        let newBoard = [...board];
         if (symbol === 'X') {
             setSymbol('O');
-            setBoard(board.map((item, index) => {
-                if (index === boardCell.val) {
-                    return 'X';
-                }
-                return 'null';
-            }));
+            newBoard[boardCell] = 'X';
         }
         else {
             setSymbol('X');
-            const updatedBoard = (board.map((item, index) => {
-                if (index === boardCell.val) {
-                    return 'O';
-                }
-                return item;
-            }));
-            setBoard(updatedBoard);
+            newBoard[boardCell] = 'O';
         }
-        // console.log(board);
-        console.log(boardCell.val);
+        setBoard(newBoard);
+        console.log(newBoard);
+
+        checkWinner();
     }
 
     const Cell = (props) => {
         const val = props.num;
         return (
-            <td onClick={() => handleClick({val})} >{board[props.num]}</td>
+            <td onClick={() => handleClick(val)} >{board[props.num]}</td>
         );
+    }
+
+    const Winner = () => {
+        return(
+            <h4>Game Winner: {result} </h4>);
     }
 
     return (
@@ -62,6 +90,7 @@ function GameBoard() {
                     </tbody>
                 </table>
             </div>
+            <Winner />
         </>
     );
 }
