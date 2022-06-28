@@ -1,45 +1,68 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import './/GameBoard.css'
 
 function GameBoard() {
-    function handleClick(num) {
-        symbol==='X' ? setSymbol('O') : setSymbol('X');
-        let cell = document.createTextNode(symbol);
-        document.getElementById(num).appendChild(cell);
+
+    const [symbol, setSymbol] = useState('X');
+    const [board, setBoard] = useState(Array(9).fill(null));
+
+    function handleClick(boardCell) {
+        if (symbol === 'X') {
+            setSymbol('O');
+            setBoard(board.map((item, index) => {
+                if (index === boardCell.val) {
+                    return 'X';
+                }
+                return 'null';
+            }));
+        }
+        else {
+            setSymbol('X');
+            const updatedBoard = (board.map((item, index) => {
+                if (index === boardCell.val) {
+                    return 'O';
+                }
+                return item;
+            }));
+            setBoard(updatedBoard);
+        }
+        // console.log(board);
+        console.log(boardCell.val);
     }
 
     const Cell = (props) => {
+        const val = props.num;
         return (
-            <td onClick={handleClick.bind(props.num)} id={props.num} ></td>
+            <td onClick={() => handleClick({val})} >{board[props.num]}</td>
         );
     }
 
-    const [symbol, setSymbol]= useState('X');
-
     return (
         <>
-        <h3>Player {symbol} turn </h3>
-        <div className='container'>
-            <table>
-                <tr>
-                    <Cell num="1" />
-                    <Cell num="2" />
-                    <Cell num="3" />
-                </tr>
-                <tr>
-                    <Cell num="4" />
-                    <Cell num="5" />
-                    <Cell num="6" />
+            <h3>Player {symbol} turn </h3>
+            <div className='container'>
+                <table>
+                    <tbody>
+                        <tr>
+                            <Cell num="0" />
+                            <Cell num="1" />
+                            <Cell num="2" />
+                        </tr>
+                        <tr>
+                            <Cell num="3" />
+                            <Cell num="4" />
+                            <Cell num="5" />
 
-                </tr>
-                <tr>
-                    <Cell num="7" />
-                    <Cell num="8" />
-                    <Cell num="9" />
-                </tr>
-            </table>
-        </div>
-    </>
+                        </tr>
+                        <tr>
+                            <Cell num="6" />
+                            <Cell num="7" />
+                            <Cell num="8" />
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 }
 
