@@ -1,23 +1,25 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './/GameBoard.css'
-
-
 
 function GameBoard() {
     function handleClick(num) {
-        //if ( symbol === 'X') {
-        //setState('o')
-
+        symbol==='X' ? setSymbol('O') : setSymbol('X');
+        let cell = document.createTextNode(symbol);
+        document.getElementById(num).appendChild(cell);
     }
 
     const Cell = (props) => {
         return (
-            <td onClick={handleClick(props.num)}></td>
+            <td onClick={handleClick.bind(props.num)} id={props.num} ></td>
         );
     }
 
+    const [symbol, setSymbol]= useState('X');
+
     return (
-        <div className='container my-5'>
+        <>
+        <h3>Player {symbol} turn </h3>
+        <div className='container'>
             <table>
                 <tr>
                     <Cell num="1" />
@@ -37,6 +39,7 @@ function GameBoard() {
                 </tr>
             </table>
         </div>
+    </>
     );
 }
 

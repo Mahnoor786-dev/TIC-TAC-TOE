@@ -1,11 +1,13 @@
+import Controls from './components/Controls';
 import GameBoard from './components/GameBoard';
-const iqra ={
-  color: "red"
-}
+// const iqra ={
+//   color: "red"
+// }
 function App() {
   return (
     <div className="App">
-      <GameBoard name="Welcome to TicTacToe AKA zero Kataa" style={iqra}></GameBoard>
+      <Controls/>
+      <GameBoard name="Welcome to TicTacToe AKA zero Kataa" ></GameBoard>  {/* style={iqra} */}
     </div>
   );
 }
