@@ -2,4 +2,6 @@ h1{
     text-align: center;
     text-decoration: dashed;
     margin-top: 20px;
+    color: rgb(3, 155, 155);
+    font-weight:700;
 }
